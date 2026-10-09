@@ -13,10 +13,11 @@ const products = ref([
 // Getters
 export const getAllProducts = computed(() => products.value); 
 export const getGroceryById = (id) => computed(() => products.value.find(product => product.id === Number(id)));
+export const idCount = ref(Math.max(0, ...getAllProducts.value.map(product => product.id))) //Om het hoogste id nummer uit de lijst te halen
 
 // Actions
 export const addGrocery = (product) => {
-  products.value.push(product); //Toevoegen van nieuwe product
+  products.value.push({...product, id: ++idCount.value}); //Toevoegen van nieuwe product
 }
 
 export const updateGrocery = (product) => {
@@ -29,3 +30,4 @@ export const updateGrocery = (product) => {
 export const removeGrocery = (id) => {
   products.value = products.value.filter(products => products.id !== id)
 }
+
