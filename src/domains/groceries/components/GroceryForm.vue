@@ -8,18 +8,17 @@ const props = defineProps({
 })
 
 //Voor nieuw product
-const name = ref(props.grocery?.name ?? ''); //Als er een naam is geef die weer, anders Name weergeven
-const price = ref(props.grocery?.price ?? '');
-const amount = ref(props.grocery?.amount ?? '');
+const tempGrocery = ref({...props.grocery});
+
 
 const emit = defineEmits(['submit']);
 
 const emitEvent = () => { //Als je op submit drukt, gebeurt dit
     emit('submit', {
-        id: props.grocery.id,
-        name: name.value,
-        price: price.value,
-        amount: amount.value
+        id: tempGrocery.value.id,
+        name: tempGrocery.value.name,
+        price: tempGrocery.value.price,
+        amount: tempGrocery.value.amount
     })
 }
 </script>
@@ -27,9 +26,9 @@ const emitEvent = () => { //Als je op submit drukt, gebeurt dit
 
 <template>
     <div>
-        <input v-model="name" placeholder="Naam">
-        <input v-model="price" type="number"  min="0" step="0.01" placeholder="Prijs">
-        <input v-model="amount" type="number" placeholder="Aantal">
+        <input v-model="tempGrocery.name" placeholder="Naam">
+        <input v-model="tempGrocery.price" type="number"  min="0" step="0.01" placeholder="Prijs">
+        <input v-model="tempGrocery.amount" type="number" placeholder="Aantal">
     </div>
     <div>
         <RouterLink :to="`/`"> <!-- Als je op de submit knop drukt, ga je weer naar de overview pagina-->
